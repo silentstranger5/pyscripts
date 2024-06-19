@@ -1,6 +1,6 @@
 # Collection of simple python scripts
 
-This repository contains collection of simple python scripts. Its code had been written using [12 Python projects](https://www.youtube.com/watch?v=8ext9G7xspg). Although functionality duplicates entirely, code had been rewritten from scratch. Besides these projects there are some random scripts and ideas.
+This repository contains collection of simple python scripts. It had been written using [12 Python projects](https://www.youtube.com/watch?v=8ext9G7xspg). Although functionality duplicates entirely, code had been rewritten from scratch. Besides these projects there are some random scripts and ideas.
 
 | File Name | File Description |
 |-----------|------------------|

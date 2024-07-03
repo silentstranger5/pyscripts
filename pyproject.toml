@@ -1,0 +1,13 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pyscripts"
+version = "1.0.0"
+dependencies = [
+	"requests",
+	"matplotlib",
+	"pillow",
+	"libretranslatepy",
+]

@@ -8,10 +8,8 @@ def get_dices(filename):
         exit("Invalid input file.")
     else:
         dices = f.read().rstrip('\n').split('\n')
-    finally:
-        if f in locals():
-            f.close()
-    
+        f.close()
+
     dices = list('\n'.join(dices[5 * i : 5 * i + 5]) for i in range(6))
     first, second = tuple(random.randrange(6) for i in range(2))
     first, second = (dices[index] for index in (first, second))

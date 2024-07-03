@@ -80,7 +80,8 @@ def quicksort(arr, p, r):
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        exit("usage: python sort.py method")
+        exit("Usage: python sort.py method\n"
+             "Methods: selection bubble insertion mergesort quicksort")
 
     fig, ax = plt.subplots()
     arr = np.arange(1, 100)
@@ -98,6 +99,19 @@ if __name__ == "__main__":
             algorithm = mergesort(arr, 0, len(arr) - 1)
         case "quicksort":
             algorithm = quicksort(arr, 0, len(arr) - 1)
+        case _:
+            algorithm = None
 
-    ani = animation.FuncAnimation(fig=fig, func=update, fargs=(bars,), frames=algorithm, interval=1, repeat=False)
-    plt.show()
+    if algorithm:
+        ani = animation.FuncAnimation(
+            fig=fig,
+            func=update,
+            fargs=(bars,),
+            frames=algorithm,
+            interval=1,
+            repeat=False,
+            cache_frame_data=False,
+        )
+        plt.show()
+    else:
+        exit("Invalid sorting method")

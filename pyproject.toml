@@ -6,8 +6,11 @@ build-backend = "hatchling.build"
 name = "pyscripts"
 version = "1.0.0"
 dependencies = [
-	"requests",
+	"libretranslatepy",
 	"matplotlib",
 	"pillow",
-	"libretranslatepy",
+	"requests",
 ]
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]

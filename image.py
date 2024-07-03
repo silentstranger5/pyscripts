@@ -1,19 +1,5 @@
-import numpy as np
+import sys
 from PIL import Image, ImageFilter, ImageChops
-from scipy import ndimage
-
-
-def apply_filters(filename, path):
-    ext = filename.split('.')[-1]
-    filepath = path + '/' + filename
-    get_path = lambda name: path + '/' + name + '.' + ext
-    image_process(filepath, get_path("brighten"), brightness, 2)
-    image_process(filepath, get_path("darken"), brightness, 0.25)
-    image_process(filepath, get_path("high_contrast"), contrast, 2)
-    image_process(filepath, get_path("low_contrast"), contrast, 0.25)
-    image_process(filepath, get_path("grayscaled"), grayscale)
-    image_process(filepath, get_path("blurred"), blur, 16)
-    image_process(filepath, get_path("sobel"), sobel)
 
 
 def image_process(infile, outfile, function, *args):
@@ -46,17 +32,35 @@ def blur(image, kernel):
 
 
 def sobel(image):
-    converted = image.convert("L")
-    array = np.asarray(converted)
-    array = array.astype('float')
-    matrix_x = ((1, 0, -1), (2, 0, -2), (1, 0, -1))
-    matrix_y = ((1, 2, 1), (0, 0, 0), (-1, -2, -1))
-    sobel_x = ndimage.convolve(array, matrix_x)
-    sobel_y = ndimage.convolve(array, matrix_y)
-    magnitude = np.hypot(sobel_x, sobel_y)
-    magnitude *= 255.0 / np.max(magnitude)
-    magnitude = np.uint8(magnitude)
-    return Image.fromarray(magnitude)
+    return image.filter(ImageFilter.FIND_EDGES)
 
 
-apply_filters("image.jpg", "image")
+if __name__ == '__main__':
+    if not sys.argv or len(sys.argv) < 4:
+        print("Usage: python image.py <input> <output> <filter> <value>\n"
+              "Filters: brightness contrast grayscale blur sobel")
+        exit(1)
+
+    infile = sys.argv[1]
+    outfile = sys.argv[2]
+    filter = sys.argv[3]
+    value = sys.argv[4] if len(sys.argv) > 4 else None
+
+    filter = filter.strip().lower()
+    value = float(value) if value else None
+
+    match filter:
+        case "brightness":
+            image_process(infile, outfile, brightness, value)
+
+        case "contrast":
+            image_process(infile, outfile, contrast, value)
+
+        case "grayscale":
+            image_process(infile, outfile, grayscale)
+
+        case "blur":
+            image_process(infile, outfile, blur, value)
+
+        case "sobel":
+            image_process(infile, outfile, sobel)
